@@ -6,14 +6,14 @@
 
 void UTankMovementComponent::IntendMoveForward(float Speed)
 {
-	if (!Body) { return; }
+	if (!ensure(Body)) { return; }
 	Body->LTrack(Speed);
 	Body->RTrack(Speed);
 }
 
 void UTankMovementComponent::IntendTurnRight(float Speed)
 {
-	if (!Body) { return; }
+	if (!ensure(Body)) { return; }
 	Body->LTrack(Speed);
 	Body->RTrack(-Speed);
 }

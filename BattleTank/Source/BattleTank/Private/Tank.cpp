@@ -21,11 +21,12 @@ void ATank::InitializeTank(UTankBarrel* BarrelToSet, UAimingComponent* AimingCom
 {
 	AimingComponent = AimingComp;
 	Barrel = BarrelToSet;
+	AimingComponent->SetBarrelReference(BarrelToSet);
 }
 
 void ATank::Aiming(FVector HitLocation)
 {
-	if (!AimingComponent) { return; }
+	if (!ensure(AimingComponent)) { return; }
 	AimingComponent->AimAt(HitLocation,LaunchSpeed);
 }
 

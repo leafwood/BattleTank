@@ -18,7 +18,7 @@ UAimingComponent::UAimingComponent()
 
 void UAimingComponent::AimAt(FVector HitLocation,float LaunchSpeed)
 {
-	if (!Barrel) { return; }
+	if (!ensure(Barrel)) { return; }
 	FVector OutLaunchVelocity;
 	FVector LaunchPoint = Barrel->GetSocketLocation(FName("LaunchPoint"));
 	//Draw Projectile Line.
@@ -47,7 +47,7 @@ void UAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 
 void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	if (!Barrel) { return; }
+	if (!ensure(Barrel)) { return; }
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimRotator = AimDirection.Rotation();
 	auto DletaRotator = AimRotator - BarrelRotator;

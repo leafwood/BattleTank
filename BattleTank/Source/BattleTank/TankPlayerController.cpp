@@ -13,7 +13,11 @@ ATank* ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UAimingComponent>();
+	if (AimingComponent)
+	{
+		FindAimingComponent(AimingComponent);
+	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -25,7 +29,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimtowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 
 	FVector OutHitLocation;
 	if (GetSightRagHitLocation(OutHitLocation))
