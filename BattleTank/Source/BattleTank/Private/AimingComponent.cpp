@@ -3,7 +3,6 @@
 #include "AimingComponent.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
-#include "Tank.h"
 
 // Sets default values for this component's properties
 UAimingComponent::UAimingComponent()

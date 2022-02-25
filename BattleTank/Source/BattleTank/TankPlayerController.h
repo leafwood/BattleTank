@@ -15,7 +15,8 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FindAimingComponent(UAimingComponent* AimingComp);
 
 protected:
 

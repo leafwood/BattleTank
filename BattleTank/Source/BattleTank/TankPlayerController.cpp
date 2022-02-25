@@ -10,6 +10,10 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 	AimingComponent = GetPawn()->FindComponentByClass<UAimingComponent>();
 	ControlledTank = Cast<ATank>(GetPawn());
+	if (AimingComponent)
+	{
+		FindAimingComponent(AimingComponent);
+	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
