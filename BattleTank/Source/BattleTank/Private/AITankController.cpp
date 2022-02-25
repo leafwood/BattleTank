@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AITankController.h"
-#include "Tank.h"
 #include "AimingComponent.h"
 
 
@@ -9,8 +8,7 @@ void AAITankController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//ATank* ControlledTank = Cast<ATank>(GetPawn());
-	Player = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	Player = GetWorld()->GetFirstPlayerController()->GetPawn();
 
 	AimingComponent = GetPawn()->FindComponentByClass<UAimingComponent>();
 }

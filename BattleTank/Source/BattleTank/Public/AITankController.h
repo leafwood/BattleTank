@@ -8,7 +8,6 @@
 #include "AITankController.generated.h"
 
 class UAimingComponent;
-class ATank;
 
 UCLASS()
 class BATTLETANK_API AAITankController : public AAIController
@@ -23,7 +22,7 @@ protected:
 
 	virtual void Tick(float DeltaTime) override;
 
-	ATank* Player = nullptr;
+	APawn* Player = nullptr;
 
 private:
 

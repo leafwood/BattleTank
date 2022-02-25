@@ -26,7 +26,6 @@ protected:
 
 	UAimingComponent* AimingComponent = nullptr;
 
-	ATank* ControlledTank = nullptr;
 private:
 	void AimtowardsCrosshair();
 
