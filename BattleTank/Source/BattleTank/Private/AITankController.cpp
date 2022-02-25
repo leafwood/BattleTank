@@ -9,26 +9,26 @@ void AAITankController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//ATank* ControlledTank = Cast<ATank>(GetPawn());
+	Player = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+
+	AimingComponent = GetPawn()->FindComponentByClass<UAimingComponent>();
 }
 
 void AAITankController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	auto Player = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-
-	ControlledTank = Cast<ATank>(GetPawn());
-	//TODO Move Towards Player. 
-
+	if (!ensure(Player)) { return; }
+	if (!ensure(AimingComponent)) { return; }
 	//Aim At Player.
 	FVector HitLocation = Player->GetActorLocation();
-	if (ControlledTank && Player)
+	if (AimingComponent && Player)
 	{
 		MoveToActor(Player, AcceptanceRatius);
 
-		ControlledTank->Aiming(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 	}
-	//Attack Player.
-	ControlledTank->Fire();
+	
+	AimingComponent->Fire();
 }
 

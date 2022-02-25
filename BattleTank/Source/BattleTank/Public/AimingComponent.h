@@ -16,6 +16,7 @@ enum class EFiringStates : uint8
 };
 
 class UTankBarrel;
+class AProjectile;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UAimingComponent : public UActorComponent
@@ -26,17 +27,30 @@ public:
 	// Sets default values for this component's properties
 	UAimingComponent();
 
-	void AimAt(FVector HitLocation,float LaunchSpeed);
-
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	void AimAt(FVector HitLocation);
 
 	void MoveBarrelTowards(FVector AimDirection);
+
+	UFUNCTION(BlueprintCallable)
+	void Fire();
+
+	UFUNCTION(BlueprintCallable)
+	void InitializeAimComp(UTankBarrel* BarrelToSet);
 
 protected:
 	UTankBarrel* Barrel = nullptr;
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringStates FiringStates = EFiringStates::Reloaded;
-private:
 
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	TSubclassOf<AProjectile> Projectile_BP;
+private:
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 10000.f;
+
+	UPROPERTY(EditDefaultsOnly)
+	float CD = 1;
+
+	double Lastfire = 0;
 };
