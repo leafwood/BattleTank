@@ -11,7 +11,7 @@ UENUM()
 enum class EFiringStates : uint8
 {
 	Reloading,
-	Firing,
+	Aiming,
 	Reloaded
 };
 
@@ -37,14 +37,19 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void InitializeAimComp(UTankBarrel* BarrelToSet);
 
+	virtual void BeginPlay() override;
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 protected:
 	UTankBarrel* Barrel = nullptr;
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringStates FiringStates = EFiringStates::Reloaded;
+	EFiringStates FiringStates = EFiringStates::Reloading;
 
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	TSubclassOf<AProjectile> Projectile_BP;
+
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 10000.f;
@@ -53,4 +58,6 @@ private:
 	float CD = 1;
 
 	double Lastfire = 0;
+
+	FVector AimDirection;
 };

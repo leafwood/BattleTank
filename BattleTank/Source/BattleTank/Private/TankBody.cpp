@@ -16,6 +16,5 @@ void UTankBody::RTrack(float RTrackForce)
 void UTankBody::AddTrackForce(FVector Location, float TrackForce)
 {
 	auto DirectionForce = GetForwardVector() * TrackForce * MaxForce;
-	//auto Tank = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	AddForceAtLocation(DirectionForce, Location);
 }

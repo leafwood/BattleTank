@@ -13,10 +13,35 @@ UAimingComponent::UAimingComponent()
 	// ...
 }
 
+void UAimingComponent::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Lastfire = FPlatformTime::Seconds();
+}
+
+void UAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	auto BarrelDerection = Barrel->GetForwardVector();
+	if (FPlatformTime::Seconds() - CD > Lastfire)
+	{
+		FiringStates = EFiringStates::Reloaded;
+		if (!BarrelDerection.Equals(AimDirection, 0.1))
+		{
+			FiringStates = EFiringStates::Aiming;
+		}
+	}
+	else
+	{
+		FiringStates = EFiringStates::Reloading;
+	}
+}
+
 void UAimingComponent::InitializeAimComp(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
+
 
 void UAimingComponent::AimAt(FVector HitLocation)
 {
@@ -35,18 +60,18 @@ void UAimingComponent::AimAt(FVector HitLocation)
 						0, 
 						ESuggestProjVelocityTraceOption::DoNotTrace);
 
-	auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+	AimDirection = OutLaunchVelocity.GetSafeNormal();
 	if (Aiming)
 	{
 		MoveBarrelTowards(AimDirection);
 	}
 }
 
-void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
+void UAimingComponent::MoveBarrelTowards(FVector AimingDirection)
 {
 	if (!ensure(Barrel)) { return; }
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
-	auto AimRotator = AimDirection.Rotation();
+	auto AimRotator = AimingDirection.Rotation();
 	auto DletaRotator = AimRotator - BarrelRotator;
 
 	Barrel->Aim(DletaRotator.Pitch, DletaRotator.Yaw);
@@ -55,8 +80,7 @@ void UAimingComponent::MoveBarrelTowards(FVector AimDirection)
 void UAimingComponent::Fire()
 {
 	if (!ensure(Barrel)) { return; }
-	bool CDExpired = (FPlatformTime::Seconds() - CD > Lastfire);
-	if (Barrel && CDExpired)
+	if (FiringStates != EFiringStates::Reloading)
 	{
 		auto Bullet = GetWorld()->SpawnActor<AProjectile>(
 			Projectile_BP,
