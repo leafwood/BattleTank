@@ -41,6 +41,8 @@ public:
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	EFiringStates GetFiringState() const;
+
 protected:
 	UTankBarrel* Barrel = nullptr;
 

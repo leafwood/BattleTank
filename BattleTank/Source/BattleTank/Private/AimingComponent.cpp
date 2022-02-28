@@ -20,6 +20,11 @@ void UAimingComponent::BeginPlay()
 	Lastfire = FPlatformTime::Seconds();
 }
 
+EFiringStates UAimingComponent::GetFiringState() const
+{
+	return FiringStates;
+}
+
 void UAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	auto BarrelDerection = Barrel->GetForwardVector();
@@ -73,7 +78,10 @@ void UAimingComponent::MoveBarrelTowards(FVector AimingDirection)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimRotator = AimingDirection.Rotation();
 	auto DletaRotator = AimRotator - BarrelRotator;
-
+	if (DletaRotator.Yaw > 180.f || DletaRotator.Yaw < -180.f)
+	{
+		DletaRotator.Yaw = -(DletaRotator.Yaw - 180.f);
+	}
 	Barrel->Aim(DletaRotator.Pitch, DletaRotator.Yaw);
 }
 

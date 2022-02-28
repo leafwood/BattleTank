@@ -26,7 +26,10 @@ void AAITankController::Tick(float DeltaTime)
 
 		AimingComponent->AimAt(HitLocation);
 	}
-	
-	AimingComponent->Fire();
+
+	if (AimingComponent->GetFiringState() == EFiringStates::Reloaded)
+	{
+		AimingComponent->Fire();
+	}
 }
 

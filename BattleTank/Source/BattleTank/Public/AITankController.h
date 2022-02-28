@@ -25,6 +25,6 @@ protected:
 	APawn* Player = nullptr;
 
 private:
-
-	float AcceptanceRatius = 1000;
+	UPROPERTY(EditAnywhere)
+	float AcceptanceRatius = 4000;
 };
