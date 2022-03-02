@@ -8,10 +8,8 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	AimingComponent = GetPawn()->FindComponentByClass<UAimingComponent>();
-	if (AimingComponent)
-	{
-		FindAimingComponent(AimingComponent);
-	}
+	if (!ensure(AimingComponent)) { return; }
+	FindAimingComponent(AimingComponent);
 }
 
 void ATankPlayerController::Tick(float DeltaTime)

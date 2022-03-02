@@ -12,7 +12,8 @@ enum class EFiringStates : uint8
 {
 	Reloading,
 	Aiming,
-	Reloaded
+	Reloaded,
+	OutAmmo
 };
 
 class UTankBarrel;
@@ -62,4 +63,7 @@ private:
 	double Lastfire = 0;
 
 	FVector AimDirection;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	int AmmoNum = 5;
 };

@@ -27,6 +27,7 @@ EFiringStates UAimingComponent::GetFiringState() const
 
 void UAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
+	if (FiringStates == EFiringStates::OutAmmo) { return; }
 	auto BarrelDerection = Barrel->GetForwardVector();
 	if (FPlatformTime::Seconds() - CD > Lastfire)
 	{
@@ -88,6 +89,7 @@ void UAimingComponent::MoveBarrelTowards(FVector AimingDirection)
 void UAimingComponent::Fire()
 {
 	if (!ensure(Barrel)) { return; }
+	if (FiringStates == EFiringStates::OutAmmo) { return; }
 	if (FiringStates != EFiringStates::Reloading)
 	{
 		auto Bullet = GetWorld()->SpawnActor<AProjectile>(
@@ -97,6 +99,8 @@ void UAimingComponent::Fire()
 		if (!ensure(Bullet)) { return; }
 		Bullet->Launch(LaunchSpeed);
 		Lastfire = FPlatformTime::Seconds();
+		AmmoNum -= 1;
+		if (AmmoNum == 0) { FiringStates = EFiringStates::OutAmmo; }
 	}
 }
 
