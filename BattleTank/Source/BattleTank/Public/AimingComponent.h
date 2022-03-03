@@ -51,7 +51,7 @@ protected:
 	EFiringStates FiringStates = EFiringStates::Reloading;
 
 	UPROPERTY(EditAnywhere, Category = "Setup")
-	TSubclassOf<AProjectile> Projectile_BP;
+	TSubclassOf<AProjectile> Projectile;
 
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)

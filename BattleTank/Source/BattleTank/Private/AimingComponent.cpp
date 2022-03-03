@@ -93,7 +93,7 @@ void UAimingComponent::Fire()
 	if (FiringStates != EFiringStates::Reloading)
 	{
 		auto Bullet = GetWorld()->SpawnActor<AProjectile>(
-			Projectile_BP,
+			Projectile,
 			Barrel->GetSocketLocation(FName(TEXT("LaunchPoint"))),
 			Barrel->GetSocketRotation(FName(TEXT("LaunchPoint"))));
 		if (!ensure(Bullet)) { return; }
