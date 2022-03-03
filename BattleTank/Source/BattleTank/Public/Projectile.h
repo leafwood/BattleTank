@@ -7,6 +7,7 @@
 #include "Projectile.generated.h"
 
 class UProjectileMovementComponent;
+class UParticleSystemComponent;
 
 UCLASS()
 class BATTLETANK_API AProjectile : public AActor
@@ -23,6 +24,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere)
+	UParticleSystemComponent* ParticleSystemComponent = nullptr;
 
 public:	
 	// Called every frame

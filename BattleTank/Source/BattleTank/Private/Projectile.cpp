@@ -2,6 +2,7 @@
 
 
 #include "Projectile.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
@@ -12,6 +13,8 @@ AProjectile::AProjectile()
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("ProjectileMovementComponent"));
 	ProjectileMovementComponent->bAutoActivate = false;
+
+	ParticleSystemComponent = CreateDefaultSubobject<UParticleSystemComponent>(FName("ParticleSystemComponent"));
 }
 
 // Called when the game starts or when spawned
