@@ -4,17 +4,26 @@
 #include "Projectile.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
 
 // Sets default values
 AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
+
+	RootComp = CreateDefaultSubobject<USceneComponent>(FName("Root"));
+	SetRootComponent(RootComp);
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("ProjectileMovementComponent"));
 	ProjectileMovementComponent->bAutoActivate = false;
 
 	ParticleSystemComponent = CreateDefaultSubobject<UParticleSystemComponent>(FName("ParticleSystemComponent"));
+	ParticleSystemComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	HitBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("HitBlast"));
+	HitBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	Force = CreateDefaultSubobject<URadialForceComponent>(FName("Force"));
+	Force->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 // Called when the game starts or when spawned
@@ -24,12 +33,6 @@ void AProjectile::BeginPlay()
 
 }
 
-// Called every frame
-void AProjectile::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
 
 void AProjectile::Launch(float Speed)
 {

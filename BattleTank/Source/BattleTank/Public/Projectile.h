@@ -8,6 +8,7 @@
 
 class UProjectileMovementComponent;
 class UParticleSystemComponent;
+class URadialForceComponent;
 
 UCLASS()
 class BATTLETANK_API AProjectile : public AActor
@@ -26,11 +27,18 @@ protected:
 	UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
 
 	UPROPERTY(VisibleAnywhere)
+	USceneComponent* RootComp = nullptr;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UParticleSystemComponent* ParticleSystemComponent = nullptr;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UParticleSystemComponent* HitBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	URadialForceComponent* Force = nullptr;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+
 
 	void Launch(float Speed);
 
