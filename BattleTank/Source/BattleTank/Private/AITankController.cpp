@@ -2,7 +2,23 @@
 
 #include "AITankController.h"
 #include "AimingComponent.h"
+#include "Tank.h"
 
+void AAITankController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &AAITankController::OnPossessedTankDeath);
+	}
+}
+
+void AAITankController::OnPossessedTankDeath()
+{
+	GetPawn()->DetachFromControllerPendingDestroy();
+}
 
 void AAITankController::BeginPlay()
 {

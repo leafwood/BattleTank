@@ -12,6 +12,12 @@ ATank::ATank()
 }
 
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+	CurrentHealth = FullHealth;
+}
+
 float ATank::GetHealthPercentage() const
 {
 	auto Percentage = float(CurrentHealth) / float(FullHealth);
@@ -32,7 +38,7 @@ float ATank::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AControll
 	CurrentHealth -= DamageToApply;
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Died Already"));
+		OnDeath.Broadcast();
 	}
 
 	return DamageToApply;

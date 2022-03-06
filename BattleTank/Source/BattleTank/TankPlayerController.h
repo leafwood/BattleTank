@@ -18,6 +18,8 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FindAimingComponent(UAimingComponent* AimingComp);
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -35,4 +37,7 @@ private:
 		float CrossHairXLocation = 0.5f;
 	UPROPERTY(EditAnywhere)
 		float CrossHairYLocation = 0.3f;
+
+	UFUNCTION()
+		void OnPossessedTankDeath();
 };

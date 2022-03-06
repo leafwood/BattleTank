@@ -17,6 +17,8 @@ class BATTLETANK_API AAITankController : public AAIController
 public:
 	UAimingComponent* AimingComponent=nullptr;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -27,4 +29,7 @@ protected:
 private:
 	UPROPERTY(EditAnywhere)
 	float AcceptanceRatius = 4000;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 };
