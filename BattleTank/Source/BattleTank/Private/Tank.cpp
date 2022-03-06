@@ -12,6 +12,12 @@ ATank::ATank()
 }
 
 
+float ATank::GetHealthPercentage() const
+{
+	auto Percentage = float(CurrentHealth) / float(FullHealth);
+	return Percentage;
+}
+
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
