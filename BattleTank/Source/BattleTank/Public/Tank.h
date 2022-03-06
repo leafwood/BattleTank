@@ -18,4 +18,11 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	//Called by the engine when damage is dealt.
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+private:
+	UPROPERTY(EditDefaultsOnly,category = "Setup")
+	int32 FullHealth = 100.f;
+	UPROPERTY(VisibleAnywhere, category = "Setup")
+	int32 CurrentHealth = FullHealth;
 };

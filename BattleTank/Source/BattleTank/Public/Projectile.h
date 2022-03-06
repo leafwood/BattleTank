@@ -31,11 +31,15 @@ protected:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UParticleSystemComponent* ParticleSystemComponent = nullptr;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UParticleSystemComponent* HitBlast = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	URadialForceComponent* Force = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
+	float ProjectileDamage = 22.f;
 
 public:	
 
